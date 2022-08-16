@@ -1,4 +1,5 @@
 const axios = require("axios");
+const translatte = require("translatte");
 exports.lambdaHandler = async (event) => {
   if (event.queryStringParameters) {
     // Register the webhook
@@ -41,7 +42,8 @@ exports.lambdaHandler = async (event) => {
           body.entry[0].changes[0].value.metadata.phone_number_id;
         let from = body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
         let msg_body = body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
-        const response = await axios({
+        const tanslate = await translatte(msg_body, { to: "en" });
+        await axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
             "https://graph.facebook.com/v12.0/" +
@@ -51,7 +53,7 @@ exports.lambdaHandler = async (event) => {
           data: {
             messaging_product: "whatsapp",
             to: from,
-            text: { body: "Ack: " + msg_body },
+            text: { body: tanslate.text },
           },
           headers: { "Content-Type": "application/json" },
         });
