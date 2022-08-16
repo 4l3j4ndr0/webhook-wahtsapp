@@ -44,7 +44,7 @@ exports.lambdaHandler = async (event) => {
         let msg_body = body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
         const tanslate = await translatte(msg_body, { to: "en" });
         await axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          method: "POST",
           url:
             "https://graph.facebook.com/v12.0/" +
             phone_number_id +
