@@ -1,6 +1,7 @@
-const axios = require("axios");
-const translatte = require("translatte");
-exports.lambdaHandler = async (event) => {
+import axios from "axios";
+import translatte from "translatte";
+
+export const handler = async (event) => {
   if (event.queryStringParameters) {
     // Register the webhook
     const queryParams = event.queryStringParameters;
@@ -46,7 +47,7 @@ exports.lambdaHandler = async (event) => {
         await axios({
           method: "POST",
           url:
-            "https://graph.facebook.com/v12.0/" +
+            "https://graph.facebook.com/v21.0/" +
             phone_number_id +
             "/messages?access_token=" +
             token,
